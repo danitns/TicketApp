@@ -42,7 +42,7 @@ function getDatesBetween(startDate, endDate) {
 
 async function createWidget(coordinates, date){
     try {
-        const response = await fetch(`https://api.weatherapi.com/v1/future.json?key=3c6d00b18ef84766b2e71432230409&q=${coordinates.lat},${coordinates.lng}&dt=${date}`, {
+        const response = await fetch(`https://api.weatherapi.com/v1/future.json?key=3c6d00b18ef84766b2e71432230000&q=${coordinates.lat},${coordinates.lng}&dt=${date}`, {
             method: 'GET',
         });
 
