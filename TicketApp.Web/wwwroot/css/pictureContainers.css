@@ -1,0 +1,25 @@
+﻿.roundPictureContainer {
+    width: 200px;
+    height: 200px;
+    border: 2px black solid;
+    border-radius: 50%;
+}
+
+.posterPictureContainer {
+    width: 500px;
+    height: 750px;
+    border: 2px black solid;
+}
+
+.pictureInContainer {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.roundPictureInContainer {
+    border-radius: 50%;
+    max-width: 100%;
+    max-height: 100%;
+}
+

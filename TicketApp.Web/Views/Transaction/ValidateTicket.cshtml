@@ -1,0 +1,17 @@
+﻿@model TicketApp.BusinessLogic.Implementation.Transactions.TicketTransactionValidationModel
+
+@if (Model == null)
+{
+    <h1>Your ticket is invalid</h1>
+}
+else
+{
+    <h1>Your ticket is valid</h1>
+    <div>
+        <div><img src="data:image/png;base64,@Convert.ToBase64String(Model.EventPicture)" /></div>
+        <div>@Model.Name</div>
+        <div>@Model.Description</div>
+        <div>@Model.StartDate</div>
+        <div>@Model.EndDate</div>
+    </div>
+}

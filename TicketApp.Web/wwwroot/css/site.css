@@ -1,0 +1,97 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    padding: 10px;
+    margin: 10px;
+    color: var(--accent-color);
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.gm-style-iw-d {
+    color: black;
+    width: 400px;
+}
+
+.dropdown-multiple {
+    position: relative;
+}
+
+.dropdown-multiple select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    text-indent: -999px;
+}
+
+.dropdown-multiple .dropdown-multiple-selected-options {
+    background: #fff;
+    color: #000000;
+    border: 1px solid #b6b2bb;
+    min-height: 36px;
+    position: relative;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.dropdown-multiple .dropdown-multiple-selected-options span {
+    position: relative;
+    display: inline-block;
+    padding: 3px;
+    margin: 3px;
+    border: 1px solid #b6b2bb;
+    cursor: pointer;
+    z-index: 2;
+}
+
+#gmp-map {
+    min-height: 800px;
+}
+
+.pac-container {
+    z-index: 100000 !important;
+}
+
+#currentPage {
+    margin: 10px;
+}
+
+#toastNotification {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10000;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+

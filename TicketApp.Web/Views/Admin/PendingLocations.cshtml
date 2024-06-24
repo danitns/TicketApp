@@ -1,0 +1,53 @@
+﻿@model List<TicketApp.BusinessLogic.Implementation.Locations.PendingLocationModel>
+
+@{
+    ViewData["Title"] = "Pending Locations";
+}
+
+<script type="text/javascript" src="~/js/utils/CreateToast.js"></script>
+<script type="text/javascript" src="~/js/pendingItems.js"></script>
+
+<div class="container">
+    <h2>Pending Locations</h2>
+    @if(Model.Count() > 0)
+    {
+        <div id="toastNotification" style="position: absolute; bottom: 0; right: 0;">
+        </div>
+        <div class="row">
+            @foreach (var location in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">@location.Name</h5>
+                            <p class="card-text">
+                                <strong>Address:</strong> @location.Address<br />
+                                <strong>Latitude:</strong> @location.Latitude<br />
+                                <strong>Longitude:</strong> @location.Longitude
+                            </p>
+                            <div class="card-footer buttonsDiv">
+                                <button class="approve-button btn btn-primary"
+                                        onclick="initButton(`/approve-location`, '@Html.Raw(location.Id)' )">
+                                    Approve
+                                </button>
+                                <button class="deleteButton btn btn-primary">Reject</button>
+                                <button class="noButton btn btn-primary" style="display: none">Cancel</button>
+                                <button class="reject-button btn btn-primary yesButton"
+                                        onclick="initButton(`/reject-location`, '@Html.Raw(location.Id)' )" style="display: none">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h3>There are no pending locations</h3>
+    }
+
+</div>
+
+<script type="text/javascript" src="~/js/utils/deleteObject.js"></script>

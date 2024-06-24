@@ -1,0 +1,59 @@
+﻿@model TicketApp.BusinessLogic.Implementation.Transactions.ShoppingCartModel
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h1>Shopping Cart</h1>
+
+<div>
+    <div>
+        <h5>Tickets:</h5>
+        @if (Model.AddedTickets.Count != 0)
+        {
+            <table class="table" id="shoppingCartTable">
+                <tr>
+                    <th>Ticket Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price per unit</th>
+                </tr>
+                @foreach (var ticket in Model.AddedTickets)
+                {
+                    <tr class="ticketTableRow">
+                        <td class="ticketName">@ticket.Name</td>
+                        <td class="ticketDescription">@ticket.Description</td>
+                        <td>
+                            <input type="number" value="@ticket.Quantity" class="quantityNumberInput form-control" />
+                        </td>
+                        <td class="ticketPrice">@ticket.Price.ToString("0.") RON</td>
+                    </tr>
+                }
+            </table>
+
+            <button class="btn btn-primary" type="submit" id="checkout-button">Checkout</button>
+
+            <button class="btn btn-primary" type="submit" id="update-button" style="display: none">Save changes</button>
+
+            <div class="text-danger" id="shoppingCartErrors"></div>
+
+        }
+        else
+        {
+            <div>There are no products in your cart. Go to <a href="/Event/Index">event page</a></div>
+        }
+
+    </div>
+</div>
+
+
+@if (Model.AddedTickets != null)
+{
+    <script type="text/javascript" src="~/js/shoppingCart.js"></script>
+
+
+    <script type="text/javascript">
+        getItemsForShoppingCartAndCreateTableRows(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model.AddedTickets)), "shoppingCartTable", "productsInput");
+    </script>
+}
+

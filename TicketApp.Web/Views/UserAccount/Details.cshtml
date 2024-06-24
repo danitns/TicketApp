@@ -1,0 +1,95 @@
+﻿@model TicketApp.BusinessLogic.Implementation.Account.UserDetailsModel
+@using TicketApp.Entities.Enums
+@{
+    ViewData["Title"] = "Your Account";
+}
+
+
+@if (Model.RoleId == (int)RoleTypes.User)
+{
+    <div id="become-organizer-div" class="text-center box-shadow">
+        <h5>Do you want to become an event organizer on our website?</h5>
+        <button class="btn btn-primary" id="organizer-button">Start now!</button>
+    </div>
+    <div id="toastNotification">
+    </div>
+}
+
+
+
+
+<div class="row">
+    <div class="col-6">
+        <div>
+            <h2>Account details</h2>
+
+            <div class="detailsProfilePicture">
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model.Picture)" />
+            </div>
+            <div class="row">
+                <div class="m-2">
+                    <strong>Name:</strong> @Model.FirstName @Model.LastName
+                </div>
+                <div class="m-2">
+                    <strong>Email:</strong> @Model.Email
+                </div>
+                <div class="m-2">
+                    <strong>Phone number:</strong> @Model.Phone
+                </div>
+                <div class="m-2">
+                    <strong>Birthdate:</strong> @Model.Birthdate.ToString("dd MMMM yyyy")
+                </div>
+
+            </div>
+
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit account</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        @if(Model.Transactions.Count() > 0)
+        {
+            <div>
+                <h2>Your transactions</h2>
+                @foreach (var item in Model.Transactions)
+                {
+                    <div class="row ">
+                        <div class="m-2 p-3 border rounded">
+                            <p><strong>Processing date:</strong> @item.ProcessingDate.ToString("dd MMMM yyyy hh:mm tt")</p>
+                            @if (item.Tickets.Count() > 0)
+                            {
+                                <div class="ticket-list">
+
+                                    <p><strong>Tickets:</strong></p>
+                                    <ul>
+                                        @foreach (var ticket in item.Tickets)
+                                        {
+                                            <li>@ticket.Item1 - @ticket.Item2 pcs.</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                            @if (item.SubscriptionName != null)
+                            {
+                                <p><strong>Subscription Name:</strong> @item.SubscriptionName</p>
+                            }
+                            <p><strong>Total Price:</strong> @item.TotalPrice.ToString("0.") RON</p>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+@if (Model.RoleId == (int)RoleTypes.User)
+{
+    <script type="text/javascript" src="~/js/utils/CreateToast.js"></script>
+    <script type="text/javascript" src="~/js/becomeOrganizer.js"></script>
+}

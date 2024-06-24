@@ -1,0 +1,34 @@
+﻿#chat-container {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    right: 100px;
+    width: 400px;
+    z-index: 10;
+    background-color: var(--background-color);
+}
+
+.chat-header {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.chat-body {
+    max-height: 600px;
+    overflow: auto;
+}
+
+.chat-response {
+    max-width: 300px;
+    position: relative;
+    left: 0px;
+}
+
+.chat-request {
+    max-width: 300px;
+    position: relative;
+    right: -70px;
+}
+
+
+

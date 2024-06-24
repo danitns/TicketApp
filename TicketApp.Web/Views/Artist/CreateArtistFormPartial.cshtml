@@ -1,0 +1,57 @@
+﻿@*artist form*@
+@using TicketApp.Entities.Enums
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#artistModal">
+    Add an artist
+</button>
+
+<div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-labelledby="artistModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="artistModalLongTitle">Create an artist</h5>
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div id="artistForm">
+                    <div class="roundPictureContainer m-auto" id="artistPictureContainer">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Artist's Picture</label>
+                        <input type="file" id="artistPicture" class="form-control pictureInput" />
+                        <span name="artistPicture" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Artist's Name</label>
+                        <input id="artistName" class="form-control" />
+                        <span name="artistName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Choose a type</label>
+                        <select class="form-select" id="artistTypeSelect" asp-items="Html.GetEnumSelectList<ArtistTypes>()"></select>
+                        <span name="artistArtistTypeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Birthdate</label>
+                        <input type="date" id="artistBirthdate" value="2000-01-01" class="form-control" />
+                        <span name="artistBirthdate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Debut</label>
+                        <input type="date" id="artistDebut" value="2010-01-01" class="form-control" />
+                        <span name="artistDebut" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeArtistModal" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" id="createArtistButton" class="btn btn-primary">Create artist</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="module" src="~/js/pictureModules/uploadPictureForArtistModule.js"></script>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<TicketApp.BusinessLogic.Implementation.Artists.DisplayArtistForIndexModel>
+
+
+<h2>List of Artists</h2>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>Artist Type</th>
+        <th>@Html.DisplayNameFor(model => model.Birthdate)</th>
+        <th>@Html.DisplayNameFor(model => model.Debut)</th>
+        <th>Delete artist</th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.ArtistTypeName</td>
+            <td>@item.Birthdate</td>
+            <td>@item.Debut</td>
+            <td><a asp-action="Delete" asp-controller="Artist" asp-route-id="@item.Id" class="btn btn-primary">X</a></td>
+        </tr>
+    }
+</table>

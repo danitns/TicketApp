@@ -1,0 +1,79 @@
+﻿.chooseSide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+}
+
+
+main {
+    height: 100%;
+    padding: 0;
+}
+
+section, .content, .container {
+    height: 100%;
+}
+
+.lightSide {
+    background-image: url("../img/museum.webp");
+}
+
+.darkSide {
+    background-image: url("../img/club.jpg");
+}
+
+.infoDiv {
+    width: 20rem;
+}
+
+.darkInfoDiv {
+    color: var(--secondary-color);
+    background-color: var(--accent-color);
+}
+
+    .darkInfoDiv h3, .lightInfoDiv h3 {
+        color: var(--secondary-color);
+    }
+
+.lightInfoDiv {
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+}
+
+.darkInfoDiv .btn-primary {
+    color: #fff;
+    background-color: var(--accent-color);
+    border-color: var(--secondary-color);
+}
+
+darkInfoDiv .btn-primary:hover {
+    color: #fff;
+    background-color: #28132a;
+    border-color: #28132a;
+}
+
+.lightInfoDiv .btn-primary {
+    color: #fff;
+    background-color: #8c7540;
+    border-color: var(--secondary-color);
+}
+
+lightInfoDiv .btn-primary:hover {
+    color: #fff;
+    background-color: #dad2be;
+    border-color: #dad2be;
+}

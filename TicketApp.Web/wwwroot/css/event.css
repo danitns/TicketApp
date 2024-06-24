@@ -1,0 +1,65 @@
+﻿.card-img-top {
+    object-fit: cover;
+}
+
+
+.my-card {
+    height: 50rem;
+}
+
+.card-img-top-container {
+    overflow: hidden;
+    height: 70%;
+}
+
+.card-body {
+    height: 30%;
+    padding: 0.5rem;
+}
+
+.card-body h5 {
+    margin: 0;
+    padding: 3px;
+}
+
+.card-body p {
+    margin: 0;
+    padding: 0;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.form-multiple-wrap {
+    width: 78%;
+}
+
+.autoresizing {
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
+
+.widget-container {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    width: 13rem;
+}
+
+.artistsDiv {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+}
+
+.info-window-header h1{
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+}
+
+.info-window-event-body {
+    height: 200px;
+}

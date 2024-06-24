@@ -1,0 +1,93 @@
+﻿@model IEnumerable<TicketApp.BusinessLogic.Implementation.Tickets.MyTicketModel>
+
+@{
+    ViewData["Title"] = "My tickets";
+}
+
+<link rel="stylesheet" href="~/css/printTicket.css" asp-append-version="true" />
+
+<h2>My tickets</h2>
+
+<div class="container">
+    <div id="giftDiv" class="m-1">
+    </div>
+    <div>
+        @if (Model.Count() != 0)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="row border rounded p-4">
+                    <div class="col-3">
+                        <img class="ticketEventPicture" src="data:image/png;base64,@Convert.ToBase64String(item.EventPicture)" />
+                    </div>
+                    <div class="col-9">
+                        <div class="row text-center">
+                            <h4>EVENT TICKET</h4>
+                            <h3>@item.Name</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Event name: @item.EventName</p>
+                                <p>Location: @item.Location</p>
+                                <p>Start date: @item.StartDate.ToString("dd-MM-yyyy hh:mm")</p>
+                                <p>End Date: @item.EndDate.ToString("dd-MM-yyyy hh:mm")</p>
+                            </div>
+                            <div class="col-6">
+                                <p>Description:</p>
+                                <p>@item.Description</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div>
+                                <button type="button" id="button_@item.Name.Replace(' ', '_')" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl-@item.Name.Replace(' ', '_')">Reveal tickets</button>
+                            </div>
+
+                            <div class="modal fade bd-example-modal-xl" id="modal-xl-@item.Name.Replace(' ', '_')" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content-wrapper">
+                                        <div class="modal-content p-2">
+                                            <button class="print disabled btn btn-outline-primary" id="printButton_@item.Name.Replace(' ', '_')"> 
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <span class="sr-only">Save ticket</span>
+                                            </button>
+                                            <div id="modal_@item.Name.Replace(' ', '_')" class="m-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+        else
+        {
+            <div>You have no tickets</div>
+        }
+
+    </div>
+</div>
+
+
+<script tyoe="text/javascript" src="~/js/requestQrCodes.js"></script>
+
+<script type="text/javascript" src="~/js/ticketGift.js"></script>
+
+<script type="text/javascript" src="~/js/save-ticket.js"></script>
+
+<script type="text/javascript">
+    checkForGift("giftDiv");
+</script>
+
+@foreach(var item in Model)
+{
+    <script>
+        requestQrCodesAndFillDiv("button_@item.Name.Replace(' ', '_')", "@item.Name", "@item.EventId",
+            "modal_@item.Name.Replace(' ', '_')", "@item.EventName", "@item.Location",
+            "@item.StartDate.ToString("dd-MM-yyyy hh:mm")", "@item.EndDate.ToString("dd-MM-yyyy hh:mm")",
+            "@item.Description", "@item.Price.ToString("0.")", "data:image/png;base64,@Convert.ToBase64String(item.EventPicture)", "printButton_@item.Name.Replace(' ', '_')");
+    </script>
+}
+

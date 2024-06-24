@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TicketApp.BusinessLogic.Implementation.Subscriptions.IndexSubscriptionModel>
+
+@{
+    ViewData["Title"] = "Subscriptions";
+}
+
+<div id="mySubscription" class="text-center mt-1">
+
+</div>
+
+<h2 class="text-center">Subscriptions</h2>
+
+<div class="container d-flex">
+    <div class="d-flex flex-row justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="flex-column h-100 col-4 border rounded m-4 shadow-lg">
+                <div class="row h-25 p-4">
+                    <h4 class="text-center">@item.Name</h4>
+                    <h2 class="text-center">@item.Price.ToString("0.") RON</h2>
+                </div>
+                <div class="row h-50 p-4">
+                    <p class="text-center">@item.Description.Replace('$', '\n')</p>
+                </div>
+                <div class="row p-4">
+                    <form action="/buy-subscription" method="post" class="text-center">
+                        <input type="hidden" name="subscriptionId" value="@item.Id">
+                        <button type="submit" class="btn btn-primary buySubscription">Buy now</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript" src="~/js/createUserSubscriptionDetails.js"></script>
+<script type="text/javascript">
+    createUserSubscriptionDetails("mySubscription", "buySubscription");
+</script>

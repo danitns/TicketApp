@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<div class="col h-100">
+    <div class="row text-center h-100">
+        <div class="col-6 h-100">
+            <div class="row chooseSide lightSide h-100">
+                <div class="infoDiv lightInfoDiv">
+                    <h3>Cultural Exploration:</h3>
+                    <p>
+                        DiscoverHub's Cultural Exploration invites you to a world of history, art, and culture. Explore museums, monuments, and theaters, and immerse yourself in intellectual and artistic experiences. Click the button to begin your cultural journey.
+                    </p>
+                    <div>
+                        <a class="btn btn-primary" asp-action="CulturalMap" asp-controller="Location">Choose</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-6 h-100">
+            <div class="row chooseSide darkSide h-100">
+                <div class="infoDiv darkInfoDiv">
+                    <h3>Party and Festival Scene:</h3>
+                    <p>
+                        Join the excitement at DiscoverHub's Party and Festival Scene! Get tickets to the hottest parties and music festivals. Dance, celebrate, and make memories with fellow partygoers. Click the button to start your party adventure now.
+                    </p>
+                    <div>
+                        <a class="btn btn-primary" asp-action="PartyMap" asp-controller="Location">Choose</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+﻿@model TicketApp.BusinessLogic.Implementation.Events.DetailsEventModel
+
+@using TicketApp.Common.DTOs
+
+@using TicketApp.Entities.Enums
+
+@inject CurrentUserDto CurrentUser
+
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    <div class="row">
+        <div class="col-6">
+            <img class="posterPictureContainer" src="data:image/png;base64,@Convert.ToBase64String(Model.PictureContent)" />
+        </div>
+
+        <div class="col-6">
+            <strong>Location: </strong>
+            <p><i class="bi bi-geo-alt"></i>@Model.LocationName</p>
+
+            <strong>Date: </strong>
+            <p><i class="bi bi-calendar-event"></i> @Model.StartDate - @Model.EndDate</p>
+
+            <strong>Event type: </strong>
+            <p>@Model.EventTypeName</p>
+
+            <strong>Event genre: </strong>
+            <p>@Model.EventGenreName</p>
+
+            <strong>Description: </strong>
+            <p>@Model.Description</p>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        @if (Model.Artists.Any())
+        {
+            <h3>Artists:</h3>
+            <div class="d-flex border rounded artistsDiv">
+                <div class="d-flex flex-row flex-wrap mx-auto">
+                    @foreach (var artist in Model.Artists)
+                    {
+                        <div class="flex-column m-1 p-2 justify-content-between" style="width: auto;">
+                            <div class="row p-1 text-center">
+                                <p>@artist.Name</p>
+                            </div>
+
+                            <div class="roundPictureContainer my-1 mx-auto" style="background:url( data:image/jpeg;base64,@Convert.ToBase64String(artist.Picture) );
+                                                                            background-position: center;
+                                                                            background-size: cover">
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+
+    @if (Model.IsOutside)
+    {
+        <h3>Weather: </h3>
+        <div id="widgets-container" class="d-flex flex-row">
+        </div>
+
+        <script type="text/javascript" src="~/js/weatherForLocation.js"></script>
+
+        <script type="text/javascript">
+            fetchDataAndCreateWidget(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model.LocationId)),
+            @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model.StartDate.ToString("yyyy-MM-dd"))),
+            @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model.EndDate.ToString("yyyy-MM-dd"))));
+        </script>
+    }
+
+    <div>
+        <h3>Buy tickets:</h3>
+        @if (Model.Tickets.Any() && Model.EndDate >= DateTime.Now)
+        {
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Tickets[0].Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Tickets[0].Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.Tickets[0].Price)</th>
+                    <th>Number of tickets</th>
+                    @if (CurrentUser.Role == RoleTypes.Admin.ToString() || Model.IsMyEvent == true)
+                    {
+                        <th>Delete ticket</th>
+                    }
+                    <th></th>
+                </tr>
+
+
+                @foreach (var item in Model.Tickets)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price.ToString("0.") RON</td>
+                        <td><input class="numberOfTickets" type="number" value="0" min="1" max="10"/></td>
+
+                        @if (CurrentUser.Role == RoleTypes.Admin.ToString() || Model.IsMyEvent == true)
+                        {
+                            <td><a asp-action="Delete" asp-controller="Ticket" asp-route-id="@item.Id" asp-route-eventId="@Model.Id" class="btn btn-primary"><i class="bi bi-trash"></i></a></td>
+                        }
+                        <td name="error_@item.Name" class="stockError"></td>
+                    </tr>
+                }
+            </table>
+            @if(CurrentUser.IsAuthenticated)
+            {
+                <a id="buyTicketsButton" class="btn btn-primary"><i class="bi bi-cart3"></i>Buy tickets</a>
+            }
+        }
+        else
+        {
+            <div>There are no tickets available</div>
+        }
+
+    </div>
+</div>
+<div>
+    @if (CurrentUser.Role == RoleTypes.Admin.ToString() || Model.IsMyEvent == true)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit event</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Add Ticket
+        </button>
+        @await Html.PartialAsync("../Ticket/CreateTicketFormPartial", Model.Id)
+    }
+</div>
+
+
+<script type="text/javascript" src="~/js/addTicketsToCart.js"></script>
+
+@if (Model.Tickets.Count > 0 && CurrentUser.IsAuthenticated)
+{
+    <script type="text/javascript">
+        var addTicketsButton = document.getElementById('buyTicketsButton');
+        addTicketsButton.onclick = () => {
+            var data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Tickets));
+            addTicketsToCart(data, "numberOfTickets", "@Model.Name");
+        }
+    </script>
+}
+

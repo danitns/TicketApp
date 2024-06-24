@@ -1,0 +1,56 @@
+﻿@model List<TicketApp.BusinessLogic.Implementation.Account.PendingOrganizer>
+
+@{
+    ViewData["Title"] = "Pending Organizers";
+}
+
+<script type="text/javascript" src="~/js/utils/CreateToast.js"></script>
+<script type="text/javascript" src="~/js/pendingItems.js"></script>
+
+
+<div class="container">
+    <h2>Pending Organizers</h2>
+    @if(Model.Count() > 0)
+    {
+        <div id="toastNotification" style="position: absolute; bottom: 0; right: 0;">
+        </div>
+        <div class="row">
+            @foreach (var organizer in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 text-center">
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(organizer.PictureContent)" class="card-img-top" alt="Organizer Picture">
+                        <div class="card-body">
+                            <h5 class="card-title">@($"{organizer.FirstName} {organizer.LastName}")</h5>
+                            <p class="card-text">
+                                <strong>Email:</strong> @organizer.Email<br />
+                                <strong>Phone:</strong> @organizer.Phone<br />
+                                <strong>Birthdate:</strong> @organizer.Birthdate.ToShortDateString()
+                            </p>
+                        </div>
+                        <div class="card-footer buttonsDiv">
+                            <button class="approve-button btn btn-primary"
+                                    onclick="initButton(`/approve-organizer`, '@Html.Raw(organizer.Id)')">
+                                Approve
+                            </button>
+                            <button class="deleteButton btn btn-primary">Reject</button>
+                            <button class="noButton btn btn-primary" style="display: none">Cancel</button>
+                            <button class="reject-button btn btn-primary yesButton"
+                                    onclick="initButton(`/reject-organizer`, '@Html.Raw(organizer.Id)')" style="display: none">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h3>There are no pending organizers</h3>
+    }
+
+</div>
+
+<script type="text/javascript" src="~/js/utils/deleteObject.js"></script>
+

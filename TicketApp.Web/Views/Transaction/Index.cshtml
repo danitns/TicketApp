@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TicketApp.BusinessLogic.Implementation.Transactions.DisplayTransactionModel>
+
+@{
+    ViewData["Title"] = "User Transactions";
+}
+
+<h2>Your past transactions</h2>
+
+@foreach (var transaction in Model)
+{
+    <div class="transaction">
+        <div class="transaction-info">
+            <p><strong>Processing Date:</strong> @transaction.ProcessingDate.ToString("dd MMMM yyyy hh:mm tt")</p>
+            @if (transaction.Tickets.Count() > 0)
+            {
+                <div class="ticket-list">
+
+                    <p><strong>Tickets:</strong></p>
+                    <ul>
+                        @foreach (var ticket in transaction.Tickets)
+                        {
+                            <li>@ticket.Item1 - @ticket.Item2 pcs.</li>
+                        }
+                    </ul>
+                </div>
+            }
+            @if(transaction.SubscriptionName != null)
+            {
+                <p><strong>Subscription Name:</strong> @transaction.SubscriptionName</p>
+            }
+            <p><strong>Total Price:</strong> @transaction.TotalPrice.ToString("0.") RON</p>
+        </div>
+    </div>
+
+    <hr class="divider" />
+}
+
+
+
+
+
+

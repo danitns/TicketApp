@@ -1,0 +1,60 @@
+﻿<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGZz8SIUQc2EgLZX4gUSNlCN-8dprMPzQ&callback=initMap&libraries=places&v=weekly" defer></script>
+@using TicketApp.Entities.Enums
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#locationModal">
+    Add a location
+</button>
+
+<div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="locationModalLongTitle">Create location</h5>
+                <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                @*location form*@
+                <div id="locationForm">
+                    <input id="pac-input"
+                           class="controls form-control"
+                           type="text"
+                           placeholder="Search Box" />
+                    <div id="mapForLocation" style="width: auto; height: 300px;"></div>
+                    <div>
+                        <span name="locationLatitude" class="text-danger"></span>
+                        <span name="locationLongitude" class="text-danger"></span>
+                        <span name="locationAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Location Name</label>
+                        <input id="locationName" class="form-control" />
+                        <span name="locationName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Location Type</label>
+                        <select id="locationLocationTypeId" class="form-select" asp-items="Html.GetEnumSelectList<LocationTypes>()">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span name="locationLocationTypeId" class="text-danger"></span>
+                    </div>
+
+                    <input type="hidden" id="locationAddress" class="form-control" />
+                    <input type="hidden" id="locationLatitude" class="form-control" />
+                    <input type="hidden" id="locationLongitude" class="form-control" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeLocationModal" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" id="createLocationButton" class="btn btn-primary">Create location</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/js/createLocationForm.js"></script>

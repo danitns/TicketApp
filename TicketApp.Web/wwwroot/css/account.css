@@ -1,0 +1,19 @@
+﻿.detailsProfilePicture {
+    width: 25rem;
+    height: auto;
+}
+
+    .detailsProfilePicture img {
+        border: 1px solid var(--accent-color);
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+    }
+
+#become-organizer-div {
+    border: 1px solid var(--accent-color);
+    padding: 10px;
+    margin: auto;
+    width: fit-content;
+    background-color: var(--secondary-color);
+}

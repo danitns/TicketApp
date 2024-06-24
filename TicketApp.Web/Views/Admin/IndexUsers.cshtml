@@ -1,0 +1,37 @@
+﻿@model List<TicketApp.BusinessLogic.Implementation.Account.UserDetailsModel>
+@using TicketApp.Entities.Enums
+
+@{
+    ViewData["Title"] = "IndexUsers";
+}
+
+<h2 class="text-center">User list</h2>
+
+<div class="row">
+    @foreach (var user in Model)
+    {
+        <div class="col-6">
+            <div class="row m-1 border rounded">
+                <div class="col-4 my-auto">
+                    <img class="ticketEventPicture" src="data:image/png;base64,@Convert.ToBase64String(user.Picture)" />
+                </div>
+                <div class="col-8">
+                    <div>First Name: @user.FirstName</div>
+                    <div>Last Name: @user.LastName</div>
+                    <div>Email: @user.Email</div>
+                    <div>Phone: @user.Phone</div>
+                    <div>Birthdate: @user.Birthdate.ToString("yyyy-MM-dd")</div>
+                    <div>Role: @Enum.GetName(typeof(RoleTypes), user.RoleId)</div>
+                    <div class="button-container buttonsDiv">
+                        <a href="@Url.Action("Edit", "UserAccount", new { id = user.Id })" class="btn btn-outline-primary">Edit</a>
+                        <button class="deleteButton btn btn-outline-primary">Delete</button>
+                        <button class="noButton btn btn-outline-primary" style="display: none">No</button>
+                        <a href="@Url.Action("Delete", "UserAccount", new { id = user.Id })" class="btn btn-outline-primary yesButton" style="display: none">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript" src="~/js/utils/deleteObject.js"></script>

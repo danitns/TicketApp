@@ -1,0 +1,144 @@
+﻿@model IEnumerable<TicketApp.BusinessLogic.Implementation.Events.StatisticEventModel>
+@using TicketApp.Entities.Enums
+@using TicketApp.Common.DTOs
+
+@inject CurrentUserDto CurrentUser
+
+@{
+    ViewData["Title"] = "List Of Events";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h2 class="text-center">Your Events</h2>
+
+<div class="container">
+    @if(Model.Count() > 0)
+    {
+        @if (CurrentUser.Role == RoleTypes.Admin.ToString() || CurrentUser.Role == RoleTypes.Organizer.ToString())
+        {
+            <p>
+                <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+            </p>
+        }
+
+        <div class="row">
+            <div>
+                <canvas id="monthlyTransactionsContainer"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <canvas id="salesByEventTypeContainer"></canvas>
+            </div>
+            <div class="col-4">
+                <p><strong>Your most successful event:</strong></p>
+                <div class="my-1">
+                    <div class="card d-flex flex-column my-1 my-card shadow">
+                        <div class="card-img-top-container">
+                            <img class="card-img-top img-fluid" src="data:image/png;base64,@Convert.ToBase64String(Model.Where(e => e.NoSales == Model.Max(e => e.NoSales)).FirstOrDefault().PictureContent)" />
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">@Model.Where(e => e.NoSales == Model.Max(e => e.NoSales)).FirstOrDefault().Name</h5>
+                            <div class="flex-fill d-flex flex-column justify-content-center">
+                                <div class="row">
+                                    <p class="card-text"><i class="bi bi-calendar-event"></i> @Model.Where(e => e.NoSales == Model.Max(e => e.NoSales)).FirstOrDefault().StartDate.ToString("dd.MM.yyyy hh:mm") - @Model.Where(e => e.NoSales == Model.Max(e => e.NoSales)).FirstOrDefault().EndDate.ToString("dd.MM.yyyy hh:mm")</p>
+
+                                </div>
+                                <div class="row my-1">
+                                    <p class="card-text"><i class="bi bi-geo-alt"></i> @Model.Where(e => e.NoSales == Model.Max(e => e.NoSales)).FirstOrDefault().LocationName</p>
+                                </div>
+                                <div class="row my-1">
+                                    <p class="card-text flex-fill">Number of tickets sold: @Model.Where(e => e.NoSales == Model.Max(e => e.NoSales)).FirstOrDefault().NoSales</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="eventsInFutureDiv">
+            <h3>Events in future</h3>
+            @foreach (var item in Model.Where(e => e.EndDate >= DateTime.Now).ToList())
+            {
+                <div class="col-md-4 my-1">
+                    <div class="card d-flex flex-column my-1 my-card shadow">
+                        <div class="card-img-top-container">
+                            <img class="card-img-top img-fluid" src="data:image/png;base64,@Convert.ToBase64String(item.PictureContent)" />
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">@item.Name</h5>
+                            <div class="flex-fill d-flex flex-column justify-content-center">
+                                <div class="row">
+                                    <p class="card-text"><i class="bi bi-calendar-event"></i> @item.StartDate.ToString("dd.MM.yyyy hh:mm") - @item.EndDate.ToString("dd.MM.yyyy hh:mm")</p>
+
+                                </div>
+                                <div class="row my-1">
+                                    <p class="card-text"><i class="bi bi-geo-alt"></i> @item.LocationName</p>
+                                </div>
+                                <div class="row my-1">
+                                    <p class="card-text flex-fill">Number of tickets sold: @item.NoSales</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row" id="eventsInPastDiv">
+            <h3>Events in past</h3>
+            @foreach (var item in Model.Where(e => e.EndDate <= DateTime.Now).ToList())
+            {
+                <div class="col-md-4 my-1">
+                    <div class="card d-flex flex-column my-1 my-card shadow">
+                        <div class="card-img-top-container">
+                            <img class="card-img-top img-fluid" src="data:image/png;base64,@Convert.ToBase64String(item.PictureContent)" />
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">@item.Name</h5>
+                            <div class="flex-fill">
+                                <div class="row">
+                                    <p class="card-text"><i class="bi bi-calendar-event"></i> @item.StartDate.ToString("dd.MM.yyyy hh:mm") - @item.EndDate.ToString("dd.MM.yyyy hh:mm")</p>
+
+                                </div>
+                                <div class="row my-1">
+                                    <p class="card-text"><i class="bi bi-geo-alt"></i> @item.LocationName</p>
+                                </div>
+                                <div class="row my-1">
+                                    <p class="card-text flex-fill">Number of tickets sold: @item.NoSales</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">See more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h3>
+                You didn't create any events yet.
+                Add one right now.
+            </h3>
+            <p>
+                <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+            </p>
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript" src="~/js/chartScripts/salesByMonthChart.js"></script>
+<script type="text/javascript" src="~/js/chartScripts/salesByEventType.js"></script>
